@@ -1,0 +1,48 @@
+<main ng-controller="adminController" class="p-3">
+    <div class="container-fluid">
+        <div class="my-auto">
+            <h2 class="mb-5">Vizsgarögzítés:</h2>
+            <div class="row">
+                <aside ng-if="Selected" ng-class="{'col-lg-3 col-md-6 col-sm-12': Selected}">
+                    <form id="#selection">
+                        <h3>Adatok:</h3>
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Tárgy neve:</label>
+                            <input type="text" name="name" class="form-control" ng-model="upload.name" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="teacher">Tanár:</label>
+                            <input type="text" name="teacher" class="form-control" ng-model="upload.teacher" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="date">Dátum:</label>
+                            <input type="date" name="date" class="form-control" ng-model="upload.date" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="start">Dátum:</label>
+                            <input type="time" name="start" class="form-control" ng-model="upload.start" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="end">Dátum:</label>
+                            <input type="time" name="end" class="form-control" ng-model="upload.end" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="signup">Terem száma:</label>
+                            <input type="text" name="signup" class="form-control" ng-model="upload.room" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="people">Maximum létszám:</label>
+                            <input type="number" name="people" class="form-control" ng-model="upload.people" min="1">
+                        </div>
+                        <input type="button" class="btn btn-success" value="Felvétel" ng-click="Upload()">
+                    </form>
+                </aside>
+                <section ng-class="{'col-lg-9 col-md-6 col-sm-12': Selected}">
+                    <div id="calendar">
+                
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>

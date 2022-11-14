@@ -1,0 +1,39 @@
+<main ng-controller="userController" class="p-3">
+    <div class="container-fluid">
+        <div class="my-auto">
+            <h2 class="mb-5">Jelentkezés:</h2>
+            <div class="row">
+                <aside ng-if="Selected" ng-class="{'col-lg-3 col-md-6 col-sm-12': Selected}">
+                    <form id="#selection">
+                        <h3>Választott tárgy adatai</h3>
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Tárgy neve:</label>
+                            <input type="text" name="name" class="form-control" ng-model="upload.name" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="teacher">Tanár:</label>
+                            <input type="text" name="teacher" class="form-control" ng-model="upload.teacher" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="date">Dátum:</label>
+                            <input type="date" name="datetime" class="form-control" ng-model="upload.date" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="signup">Terem száma:</label>
+                            <input type="text" name="signup" class="form-control" ng-model="upload.room" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="signup">Jelentkezők:</label>
+                            <input type="text" name="signup" class="form-control" ng-model="upload.signups" disabled>
+                        </div>
+                    </form>
+                </aside>
+                <section ng-class="{'col-lg-9 col-md-6 col-sm-12': Selected}">
+                    <div id="calendar">
+                
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
