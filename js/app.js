@@ -75,8 +75,8 @@ app.controller('adminController', function($scope){
         $scope.events.forEach(e=>{
             tomb.push({
                 title:`${e.name} - ${e.teacher}`,
-                startStr:new Date(e.start).toISOString(),
-                endStr:new Date(e.end).toISOString()
+                start:new Date(e.start).toISOString(),
+                end:new Date(e.end).toISOString()
             })
         })
         console.log(tomb);
