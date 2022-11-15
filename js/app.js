@@ -14,6 +14,8 @@ app.config(function ($routeProvider){
 })
 app.controller('adminController', function($scope){
     $scope.events = [];
+    $scope.IsEvent = false;
+    $scope.CurrentEvent = {};
     if (window.localStorage.getItem('vizsgak')!=null) $scope.events = angular.fromJson(window.localStorage.getItem('vizsgak'));
     $scope.upload;
     $scope.Upload = function(){
@@ -22,16 +24,19 @@ app.controller('adminController', function($scope){
             let start = new Date(`${$scope.upload.date.toISOString().split('T')[0]}T${$scope.upload.start.toISOString().split('T')[1].split('.')[0]}`),
                 end = new Date(`${$scope.upload.date.toISOString().split('T')[0]}T${$scope.upload.end.toISOString().split('T')[1].split('.')[0]}`) 
             let newdata = {
+                id: $scope.events.length,
                 name: $scope.upload.name,
                 teacher: $scope.upload.teacher,
                 date: $scope.upload.date,
                 start: start.setDate(start.getDate() + 1),
                 end: end.setDate(end.getDate() + 1),
                 room: $scope.upload.room,
-                people: $scope.upload.people
+                max: $scope.upload.people,
+                people: []
             }
             $scope.events.push(newdata);
             $scope.Save();
+            $scope.Selected = false;
             $scope.init();
         }
     }
@@ -59,12 +64,14 @@ app.controller('adminController', function($scope){
             themeSystem:'bootstrap5',
             selectable:true,
             events:$scope.ConvertEvents(),
-            select: function(info){
+            dateClick: function(info){
                 $scope.Selected = true;
-                $scope.upload.date = info.start
+                $scope.upload.date = info.date
             },
-            unselect: function(){
-                $scope.Selected = false;
+            eventClick: function(info){
+                $scope.IsEvent = true;
+                $scope.CurrentEvent = info.event
+                console.log($scope.CurrentEvent);
             }
 
         });
@@ -74,26 +81,86 @@ app.controller('adminController', function($scope){
         let tomb = [];
         $scope.events.forEach(e=>{
             tomb.push({
+                id: e.id,
                 title:`${e.name} - ${e.teacher}`,
                 start:new Date(e.start).toISOString(),
-                end:new Date(e.end).toISOString()
+                end:new Date(e.end).toISOString(),
+                people: e.people,
+                max: e.max
             })
         })
         console.log(tomb);
         return tomb;
     }
-    $scope.Selected = true;
+    $scope.Selected = false;
     $scope.init();
 })
 app.controller('userController', function($scope){
+    $scope.events = window.localStorage.getItem('vizsgak')==null ? [] : angular.fromJson(window.localStorage.getItem('vizsgak'));
+    $scope.Selected = false;
+    $scope.selected = {};
+    $scope.student = {};
     $scope.init = function(){
         let calendar = new FullCalendar.Calendar(document.querySelector('#calendar'), {
             initialView: 'dayGridMonth',
-            height: "100%",
+            height: "650px",
+            headerToolbar:{
+                start:'title',
+                center:'listWeek,dayGridMonth',
+                end: 'today prev,next'
+            },
+            selectable:true,
+            events: $scope.ConvertEvents(),
+            eventClick: function(info){
+                let event = info.event
+                $scope.Selected = true;
+                $scope.selected = $scope.setSelection(event);
+            }
+
         });
         calendar.render();
     }
-    $scope.Selected = true;
+
+    $scope.setSelection = function(event){
+        let object = {
+            teacher: event.title.split('-')[1].trim(),
+            name:event.title.split('-')[0].trim(),
+            room:event.extendedProps.room,
+            date:event.start,
+            signups:`${event.extendedProps.current}/${event.extendedProps.limit}`,
+            id:event.id
+        }
+        return object;
+    }
+    $scope.SignUp = function(){
+        if (Object.values($scope.selected).length==0) alert('Nem választott vizsgát!');
+        else if (Object.values($scope.student).length==3 && !Object.values($scope.student).includes('')){
+            if ($scope.events[$scope.selected.id].length!=$scope.events[$scope.selected.id].max){
+                $scope.events[$scope.selected.id].people.push($scope.student)
+                alert('Sikeres vizsgafelvétel!');
+                window.localStorage.setItem('vizsgak', angular.toJson($scope.events));
+                $scope.Selected = false;
+            }
+            else alert('Erre a vizsgára sajnos már nem lehet jelentkezni!');
+        }
+        else alert('Nem megfelelőek a bemeneti adatok!')
+    }
+
+    $scope.ConvertEvents = function(){
+        let tomb = [];
+        $scope.events.forEach(e=>{
+            tomb.push({
+                id: e.id,
+                title:`${e.name} - ${e.teacher}`,
+                start:new Date(e.start).toISOString(),
+                end:new Date(e.end).toISOString(),
+                room: e.room,
+                limit: e.max,
+                current: e.max - e.people.length
+            })
+        })
+        return tomb;
+    }
     $scope.init();
 })
 app.controller('loginController', function($scope){

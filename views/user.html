@@ -8,24 +8,39 @@
                         <h3>Választott tárgy adatai</h3>
                         <div class="mb-3">
                             <label class="form-label" for="name">Tárgy neve:</label>
-                            <input type="text" name="name" class="form-control" ng-model="upload.name" disabled>
+                            <input type="text" name="name" class="form-control" ng-model="selected.name" disabled>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="teacher">Tanár:</label>
-                            <input type="text" name="teacher" class="form-control" ng-model="upload.teacher" disabled>
+                            <input type="text" name="teacher" class="form-control" ng-model="selected.teacher" disabled>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="date">Dátum:</label>
-                            <input type="date" name="datetime" class="form-control" ng-model="upload.date" disabled>
+                            <input type="date" name="datetime" class="form-control" ng-model="selected.date" disabled>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="signup">Terem száma:</label>
-                            <input type="text" name="signup" class="form-control" ng-model="upload.room" disabled>
+                            <input type="text" name="signup" class="form-control" ng-model="selected.room" disabled>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="signup">Jelentkezők:</label>
-                            <input type="text" name="signup" class="form-control" ng-model="upload.signups" disabled>
+                            <label class="form-label" for="signup">Férőhelyek:</label>
+                            <input type="text" name="signup" class="form-control" ng-model="selected.signups" disabled>
                         </div>
+                        <hr>
+                        <h3>Diák adatai:</h3>
+                        <div class="mb-3">
+                            <label class="form-label" for="signup">Jelentkező neve:</label>
+                            <input type="text" name="signup" class="form-control" ng-model="student.FullName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="signup">Jelentkező OM-azonosítója:</label>
+                            <input type="text" name="signup" class="form-control" ng-model="student.OM">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="signup">Jelentkező lakcíme:</label>
+                            <input type="text" name="signup" class="form-control" ng-model="student.Address">
+                        </div>
+                        <input type="button" value="Jelentkezés" class="btn btn-success" ng-click="SignUp()">
                     </form>
                 </aside>
                 <section ng-class="{'col-lg-9 col-md-6 col-sm-12': Selected}">

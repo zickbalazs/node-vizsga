@@ -2,8 +2,9 @@
     <div class="container-fluid">
         <div class="my-auto">
             <h2 class="mb-5">Vizsgarögzítés:</h2>
-            <div class="row">
-                <aside ng-if="Selected" ng-class="{'col-lg-3 col-md-6 col-sm-12': Selected}">
+            <input type="text" ng-model="selected.update">
+            <div class="row mb-4">
+                <aside ng-if="Selected" ng-class="{'col-lg-3 col-md-6 col-sm-12 d-block': Selected, 'd-none': !Selected}">
                     <form id="#selection">
                         <h3>Adatok:</h3>
                         <div class="mb-3">
@@ -42,6 +43,34 @@
                 
                     </div>
                 </section>
+            </div>
+            <div ng-if="IsEvent">
+                <h4>Vizsgára jelentkezők</h4>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#.</th>
+                            <th>Vizsgázó neve:</th>
+                            <th>OM-Azonosító</th>
+                            <th>Lakcím</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="dude in CurrentEvent.extendedProps.people">
+                            <td>{{$index + 1}}</td>
+                            <td>{{dude.FullName}}</td>
+                            <td>{{dude.OM}}</td>
+                            <td>{{dude.Address}}</td>
+                            
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Jelentkezők:</td>
+                            <td>{{CurrentEvent.extendedProps.people.length}}/{{CurrentEvent.extendedProps.max}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
