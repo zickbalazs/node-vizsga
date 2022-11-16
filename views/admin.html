@@ -2,7 +2,6 @@
     <div class="container-fluid">
         <div class="my-auto">
             <h2 class="mb-5">Vizsgarögzítés:</h2>
-            <input type="text" ng-model="selected.update">
             <div class="row mb-4">
                 <aside ng-if="Selected" ng-class="{'col-lg-3 col-md-6 col-sm-12 d-block': Selected, 'd-none': !Selected}">
                     <form id="#selection">
@@ -39,14 +38,15 @@
                     </form>
                 </aside>
                 <section ng-class="{'col-lg-9 col-md-6 col-sm-12': Selected}">
-                    <div id="calendar">
+                    <div id="calendar" ng-click="DoNothing()" ng-mouseover="DoNothing()">
                 
                     </div>
                 </section>
             </div>
             <div ng-if="IsEvent">
-                <h4>Vizsgára jelentkezők</h4>
-                <table class="table table-bordered table-hover">
+                <h4>{{CurrentEvent.title.split('-')[0].trim()}} vizsgára jelentkezők</h4>
+                <h5 ng-if="CurrentEvent.extendedProps.people.length==0" class="text-danger text-center">Nincs még jelentkező erre a vizsgára!</h5>
+                <table class="table table-bordered table-hover" ng-if="CurrentEvent.extendedProps.people.length>0">
                     <thead>
                         <tr>
                             <th>#.</th>

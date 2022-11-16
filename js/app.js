@@ -14,6 +14,7 @@ app.config(function ($routeProvider){
 })
 app.controller('adminController', function($scope){
     $scope.events = [];
+    
     $scope.IsEvent = false;
     $scope.CurrentEvent = {};
     if (window.localStorage.getItem('vizsgak')!=null) $scope.events = angular.fromJson(window.localStorage.getItem('vizsgak'));
@@ -71,7 +72,6 @@ app.controller('adminController', function($scope){
             eventClick: function(info){
                 $scope.IsEvent = true;
                 $scope.CurrentEvent = info.event
-                console.log($scope.CurrentEvent);
             }
 
         });
@@ -93,6 +93,8 @@ app.controller('adminController', function($scope){
         return tomb;
     }
     $scope.Selected = false;
+    
+    $scope.DoNothing = function(){}
     $scope.init();
 })
 app.controller('userController', function($scope){
@@ -120,7 +122,9 @@ app.controller('userController', function($scope){
         });
         calendar.render();
     }
-
+    $scope.DoNothing = function(){
+        $scope.Selected = $scope.Selected;
+    }
     $scope.setSelection = function(event){
         let object = {
             teacher: event.title.split('-')[1].trim(),
