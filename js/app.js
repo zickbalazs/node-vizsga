@@ -123,7 +123,6 @@ app.controller('userController', function($scope){
         calendar.render();
     }
     $scope.DoNothing = function(){
-        $scope.Selected = $scope.Selected;
     }
     $scope.setSelection = function(event){
         let object = {
@@ -139,7 +138,7 @@ app.controller('userController', function($scope){
     $scope.SignUp = function(){
         if (Object.values($scope.selected).length==0) alert('Nem választott vizsgát!');
         else if (Object.values($scope.student).length==3 && !Object.values($scope.student).includes('')){
-            if ($scope.events[$scope.selected.id].length!=$scope.events[$scope.selected.id].max){
+            if ($scope.events[$scope.selected.id].people.length<$scope.events[$scope.selected.id].max){
                 $scope.events[$scope.selected.id].people.push($scope.student)
                 alert('Sikeres vizsgafelvétel!');
                 window.localStorage.setItem('vizsgak', angular.toJson($scope.events));

@@ -28,19 +28,22 @@
                         </div>
                         <hr>
                         <h3>Diák adatai:</h3>
-                        <div class="mb-3">
-                            <label class="form-label" for="signup">Jelentkező neve:</label>
-                            <input type="text" name="signup" class="form-control" ng-model="student.FullName">
+                        <h5 class="text-danger" ng-if="events[selected.id].max==events[selected.id].people.length">Erre a vizsgára már nem lehet jelentkezni!</h5>
+                        <div ng-if="events[selected.id].people.length!=events[selected.id].max">
+                            <div class="mb-3">
+                                <label class="form-label" for="signup">Jelentkező neve:</label>
+                                <input type="text" name="signup" class="form-control" ng-model="student.FullName">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="signup">Jelentkező OM-azonosítója:</label>
+                                <input type="text" name="signup" class="form-control" ng-model="student.OM">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="signup">Jelentkező lakcíme:</label>
+                                <input type="text" name="signup" class="form-control" ng-model="student.Address">
+                            </div>
+                            <input type="button" value="Jelentkezés" class="btn btn-success" ng-click="SignUp()">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="signup">Jelentkező OM-azonosítója:</label>
-                            <input type="text" name="signup" class="form-control" ng-model="student.OM">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="signup">Jelentkező lakcíme:</label>
-                            <input type="text" name="signup" class="form-control" ng-model="student.Address">
-                        </div>
-                        <input type="button" value="Jelentkezés" class="btn btn-success" ng-click="SignUp()">
                     </form>
                 </aside>
                 <section ng-class="{'col-lg-9 col-md-6 col-sm-12': Selected}">
